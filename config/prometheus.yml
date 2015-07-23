@@ -5,12 +5,11 @@
 #  vim:ts=2:sw=2:et
 #
 
-# my global config
 global:
   scrape_interval:     10s # By default, scrape targets every 15 seconds.
   evaluation_interval: 10s # By default, scrape targets every 15 seconds.
   labels:
-    monitor: 'codelab-monitor'
+    monitor: 'monitor'
 
 # Load and evaluate rules in this file every 'evaluation_interval' seconds.
 rule_files:
@@ -18,13 +17,14 @@ rule_files:
   # - "second.rules"
 
 scrape_configs:
-  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
   - job_name: 'prometheus'
     scrape_interval: 5s
     scrape_timeout: 10s
     target_groups:
       - targets: ['localhost:9090']
-  - job_name: 'services'
+  - job_name: 'nodes'
     file_sd_configs:
-      - names: [ '/etc/prometheus/targets.d/*.yml' ]  
-
+      - names: [ '/etc/prometheus/targets.d/nodes.yml' ]
+  - job_name: 'pods'
+    file_sd_configs:
+      - names: [ '/etc/prometheus/targets.d/pods.yml' ]

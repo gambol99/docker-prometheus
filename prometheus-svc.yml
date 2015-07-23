@@ -18,6 +18,7 @@ metadata:
         port: 80
         vhost: prometheus
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 9090
