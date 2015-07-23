@@ -25,13 +25,15 @@ spec:
           - -p 8001
           - --insecure-skip-tls-verify=true
           - --server=https://10.101.0.1:443
-      - name: config
-        image: gambol99/prometheus-config
+      - name: prometheus-k8s
+        image: gambol99/prometheus-k8s
         args:
-          - -s 127.0.0.1:8001
+          - -config=/etc/prometheus/targets.d
+          - -logtostderr=true
+          - -v=3
         volumeMounts:
-        - name: config
-          mountPath: /opt/prometheus
+        - name: targets
+          mountPath: /etc/prometheus/targets.d
       - name: prometheus
         image: prom/prometheus:latest
         ports:
@@ -41,11 +43,10 @@ spec:
           - -storage.local.path=/prometheus
           - -web.console.libraries=/etc/prometheus/console_libraries
           - -web.console.templates=/etc/prometheus/console
-
         volumeMounts:
-        - name: config
-          mountPath: /opt/prometheus
+        - name: targets
+          mountPath: /etc/prometheus/targets.d
       volumes:
-      - name: config
+      - name: targets
         source:
           emptyDir: {}
