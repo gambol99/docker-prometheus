@@ -4,7 +4,7 @@
 #
 #  vim:ts=2:sw=2:et
 #
-FROM prom/prometheus
+FROM prom/prometheus:latest
 MAINTAINER Rohith <gambol99@gmail.com>
 
 ADD config/prometheus.yml /etc/prometheus/prometheus.yml
@@ -15,5 +15,5 @@ ENTRYPOINT [ "/bin/prometheus" ]
 CMD        [ "-config.file=/etc/prometheus/prometheus.yml", \
              "-storage.local.path=/prometheus", \
              "-web.console.libraries=/etc/prometheus/console_libraries", \
-             "-web.console.templates=/etc/prometheus/consoles" ]
-
+             "-web.console.templates=/etc/prometheus/consoles", \
+             "-web.listen-address=:9090" ]
