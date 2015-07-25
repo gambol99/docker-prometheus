@@ -32,3 +32,5 @@ spec:
         env:
         - name: MYSQL_PASS
           value: udsu8diw8d
+        - name: ON_CREATE_DB
+          value: metrics
