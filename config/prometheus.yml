@@ -22,9 +22,6 @@ scrape_configs:
     scrape_timeout: 10s
     target_groups:
       - targets: ['localhost:9090']
-  - job_name: 'nodes'
+  - job_name: 'dynamic'
     file_sd_configs:
-      - names: [ '/etc/prometheus/targets.d/nodes.yml' ]
-  - job_name: 'pods'
-    file_sd_configs:
-      - names: [ '/etc/prometheus/targets.d/pods.yml' ]
+      - names: [ '/etc/prometheus/targets.d/*.yml' ]
